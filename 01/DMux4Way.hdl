@@ -16,8 +16,8 @@ CHIP DMux4Way {
     OUT a, b, c, d;
 
     PARTS:
-    DMux (in=in, sel=[1], out=dm1o1, out=dm1o2);
+    DMux (in=in, sel=sel[1], a=dm1o1, b=dm1o2);
 
-    DMux (in=dm1o1, sel=[0], out=a, out=b);
-    DMux (in=dm1o2, sel=[0], out=c, out=d);
+    DMux (in=dm1o1, sel=sel[0], a=a, b=b);
+    DMux (in=dm1o2, sel=sel[0], a=c, b=d);
 }

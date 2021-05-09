@@ -10,3 +10,41 @@
 // R0 >= 0, R1 >= 0, and R0*R1 < 32768.
 
 // Put your code here.
+// init
+@i
+M=1
+@R1
+D=M
+@n
+M=D
+@result
+M=0
+
+(LOOP)
+  //check if ready to leave the loop
+  @i
+  D=M
+  @n
+  D=M-D
+  @STOP
+  D;JLT
+
+  @R0
+  D=M
+  @result
+  D=D+M
+  M=D
+  @i
+  M=M+1
+  @LOOP
+  0;JMP
+
+(STOP)
+  @result
+  D=M
+  @R2
+  M=D
+
+(END)
+  @END
+  0;JMP

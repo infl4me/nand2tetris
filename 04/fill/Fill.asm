@@ -20,11 +20,14 @@ M=D-1
 M=0
 
 (LISTEN_KBD)
+  // init/reset addr
   @SCREEN
   D=A
   @addr
   M=D
 
+  // if 0 set pixelBit to 0 else set to -1
+  // then start filling the screen
   @KBD
   D=M
   @SETPIXELBIT0
@@ -34,6 +37,7 @@ M=0
 
 
 (FILL_SCREEN)
+  // if last address passed jump to keyboard listener
   @addr
   D=M
   @lastaddr

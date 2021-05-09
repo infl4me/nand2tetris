@@ -12,3 +12,58 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+@KBD
+D=A
+@lastaddr
+M=D-1
+@pixelBit
+M=0
+
+(LISTEN)
+  @SCREEN
+  D=A
+  @addr
+  M=D
+  
+  @KBD
+  D=M
+  @SETPIXELBIT0
+  D;JEQ
+  @SETPIXELBIT1
+  0;JMP
+
+
+(LOOP)
+  @addr
+  D=M
+  @lastaddr
+  D=D-M
+  @LISTEN
+  D;JGT
+
+  @pixelBit
+  D=M
+  @addr
+  A=M
+  M=D
+
+  @addr
+  M=M+1
+
+  @LOOP
+  0;JMP
+
+(SETPIXELBIT1)
+  @pixelBit
+  M=-1
+  @LOOP
+  0;JMP
+
+(SETPIXELBIT0)
+  @pixelBit
+  M=0
+  @LOOP
+  0;JMP
+
+
+

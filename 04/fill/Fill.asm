@@ -19,12 +19,12 @@ M=D-1
 @pixelBit
 M=0
 
-(LISTEN)
+(LISTEN_KBD)
   @SCREEN
   D=A
   @addr
   M=D
-  
+
   @KBD
   D=M
   @SETPIXELBIT0
@@ -33,12 +33,12 @@ M=0
   0;JMP
 
 
-(LOOP)
+(FILL_SCREEN)
   @addr
   D=M
   @lastaddr
   D=D-M
-  @LISTEN
+  @LISTEN_KBD
   D;JGT
 
   @pixelBit
@@ -50,19 +50,19 @@ M=0
   @addr
   M=M+1
 
-  @LOOP
+  @FILL_SCREEN
   0;JMP
 
 (SETPIXELBIT1)
   @pixelBit
   M=-1
-  @LOOP
+  @FILL_SCREEN
   0;JMP
 
 (SETPIXELBIT0)
   @pixelBit
   M=0
-  @LOOP
+  @FILL_SCREEN
   0;JMP
 
 

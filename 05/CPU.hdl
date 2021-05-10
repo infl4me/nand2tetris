@@ -59,7 +59,8 @@ CHIP CPU {
     ARegister(in=instrcAluMuxOut, load=aregLoadFlag, out=aregOut,out[0..14]=addressM);
 
     Mux16(a=aregOut, b=inM, sel=instruction[12], out=aregInmMuxOut);
-    DRegister(in=aluOut, load=instruction[4], out=dregOut);
+    And(a=instruction[4], b=instruction[15], out=dregLoad);
+    DRegister(in=aluOut, load=dregLoad, out=dregOut);
     ALU(x=dregOut, y=aregInmMuxOut, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=aluOut,out=outM, zr=aluZr, ng=aluNg);
 
     And(a=aluNg, b=instruction[2], out=jmpFlag1);

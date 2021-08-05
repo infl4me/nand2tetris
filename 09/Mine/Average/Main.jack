@@ -1,0 +1,20 @@
+class Main {
+  function void main() {
+    var Array arr;
+    var int length, i, result;
+
+    let result = 0;
+    let i = 0;
+    let length = Keyboard.readInt("How many numbers? ");
+    let arr = Array.new(length);
+    while (i < length) {
+      let arr[i] = Keyboard.readInt("Enter a number: ");
+      let result = result + arr[i];
+      let i = i + 1;
+    }
+
+    do Output.printString("The result is: ");
+    do Output.printInt(result / length);
+    return;
+  }
+}

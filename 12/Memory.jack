@@ -9,26 +9,70 @@
  * consists of 32,768 words, each holding a 16-bit binary number.
  */ 
 class Memory {
+    static Array ram;
+    static Array freeList;
 
     /** Initializes the class. */
     function void init() {
+        let ram = 0;
+        let freeList = 2048; // heap base adress
+        
+        let freeList[0] = 0;
+        let freeList[1] = 14333; // heap size
+
+        return;
     }
 
     /** Returns the RAM value at the given address. */
     function int peek(int address) {
+        return ram[address];
     }
 
     /** Sets the RAM value at the given address to the given value. */
     function void poke(int address, int value) {
+        let ram[address] = value;
+        return;
     }
 
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
+        var Array segment;
+        var int newAddress;
+
+        let segment = freeList;
+
+        while (~(segment = 0)) {
+            if (((size + 2) < segment[1]) | ((size + 2) = segment[1])) { // is able to split segment
+                let newAddress = segment + 2 + segment[1] - (size + 2); // address for new segment
+                
+                let segment[1] = segment[1] - (size + 2); // update current segment size
+
+                let ram[newAddress] = 0; // set link to next segment of new segment
+                let ram[newAddress + 1] = size; // set size of new segment
+                
+                return newAddress;
+            }
+            
+            let segment = segment[0]; // advance to next segment
+        }
+
+        return 0;
     }
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
     function void deAlloc(Array o) {
+        var Array segment;
+
+        let segment = freeList;
+
+        while (~(segment[0] = null)) { // find last item in the list
+            let segment = segment[0];
+        }
+
+        let segment[0] = o;
+
+        return;
     }    
 }

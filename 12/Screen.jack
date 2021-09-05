@@ -9,35 +9,58 @@
  * of 512 pixels each (indexed 0..511, left to right). The top left pixel on 
  * the screen is indexed (0,0).
  */
-class Screen {
+ class Screen {
+    static boolean color;
+    static int baseAddress;
 
     /** Initializes the Screen. */
     function void init() {
+        let color = true;
+        let baseAddress = 16384;
+        
+        return;
     }
 
     /** Erases the entire screen. */
     function void clearScreen() {
+        return;
     }
 
     /** Sets the current color, to be used for all subsequent drawXXX commands.
      *  Black is represented by true, white by false. */
     function void setColor(boolean b) {
+        let color = b;
+        return;
     }
 
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
+        var int address, value;
+        let address = (32 * y) + (x / 16) + baseAddress;
+        let value = Memory.peek(address);
+
+        if (color) {
+            do Memory.poke(address, value | Math.pow(2, Math.rem(x, 16)));
+            return;
+        } else {
+            do Memory.poke(address, value & (-1 - Math.pow(2, Math.rem(x, 16))));
+            return;
+        }
     }
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
+        return;
     }
 
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      * and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
+        return;
     }
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
+        return;
     }
 }

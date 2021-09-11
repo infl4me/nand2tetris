@@ -23,6 +23,13 @@
 
     /** Erases the entire screen. */
     function void clearScreen() {
+        var boolean originColor;
+        let originColor = color;
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(0, 0, 511, 255);
+        do Screen.setColor(originColor);
+
         return;
     }
 
@@ -98,11 +105,31 @@
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      * and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
+        var int i;
+
+        while (i < (y2 - y1)) {
+            do Screen.drawLine(x1, y1 + i, x2, y1 + i);
+            let i = i + 1;
+        }
+
         return;
     }
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
+        var int dy;
+        let dy = r;
+
+        while ((dy > -r) | (dy = -r)) {
+            do Screen.drawLine(
+                x - Math.sqrt(Math.pow(r, 2) - Math.pow(dy, 2)),
+                y + dy,
+                x + Math.sqrt(Math.pow(r, 2) - Math.pow(dy, 2)),
+                y + dy
+            );
+            let dy = dy - 1;
+        }
+
         return;
     }
 }

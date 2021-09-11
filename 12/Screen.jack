@@ -50,6 +50,48 @@
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
+        var int dx, dy, a, b, diff, stepX, stepY, dxAbs, dyAbs;
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let dxAbs = Math.abs(dx);
+        let dyAbs = Math.abs(dy);
+        if (~(dx = 0)) {
+            let stepX = dx / dxAbs;
+        }
+        if (~(dy = 0)) {
+            let stepY = dy / dyAbs;
+        }
+
+        if (dx = 0) {
+            while ((b < dyAbs) | (b = dyAbs)) {
+                do Screen.drawPixel(x1, y1 + (b * stepY));
+                let b = b + 1;
+            }
+
+            return;
+        }
+
+        if (dy = 0) {
+            while ((b < dxAbs) | (b = dxAbs)) {
+                do Screen.drawPixel(x1 + (b * stepX), y1);
+                let b = b + 1;
+            }
+
+            return;
+        }
+
+        while (((a < dxAbs) | (a = dxAbs)) & ((b < dyAbs) | (b = dyAbs))) {
+            do Screen.drawPixel(x1 + (a * stepX), y1 + (b * stepY));
+
+            if (diff < 0) {
+                let a = a + 1;
+                let diff = diff + dyAbs;
+            } else {
+                let b = b + 1;
+                let diff = diff - dxAbs;
+            }
+        }
+
         return;
     }
 

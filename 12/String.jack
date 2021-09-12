@@ -74,8 +74,36 @@ class String {
         return 1;
     }
 
+    function char getCharFromDigit (int digit) {
+        return 48 + digit;
+    }
+
+    method void int2str (int val) {
+        var char c;
+
+        let c = String.getCharFromDigit(Math.rem(val, 10));
+
+        if (val < 10) {
+            do appendChar(c);
+        } else {
+            do int2str(val / 10);
+            do appendChar(c);
+        }
+
+        return;
+    }
+
     /** Sets this string to hold a representation of the given value. */
     method void setInt(int val) {
+        let length = 0;
+
+        if (val < 0) {
+            do appendChar(45); // add leading - for negative numbers
+        }
+
+        do int2str(Math.abs(val));
+
+
         return;
     }
 

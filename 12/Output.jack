@@ -195,6 +195,10 @@
         return charMaps[c];
     }
 
+    function boolean isThereNoSpace() {
+        return cursor[0] = -1;
+    }
+
     /** Moves the cursor to the j-th column of the i-th row,
      *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
@@ -208,13 +212,19 @@
 
     /** Moves the cursor to the next cell */
      function void advanceCursor() {
-        if (Output.isReachedEnd()) {
+        if ((cursor[0] + 1) > gridWidth) {
+            if (cursor[1] + 1 > gridHeight) {
+                let cursor[0] = -1;
+                let cursor[1] = -1;
+                return;
+            }
+
+            let cursor[0] = 0;
+            let cursor[1] = cursor[1] + 1;
             return;
         }
 
         let cursor[0] = cursor[0] + 1;
-        let cursor[1] = cursor[1] + 1;
-
         return;
     }
 
@@ -243,14 +253,10 @@
         return;
     }
 
-     function boolean isReachedEnd() {
-        return (cursor[0] = gridWidth + 1) & (cursor[1] = gridHeight + 1);
-    }
-
     /** Displays the given character at the cursor location,
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
-        if (Output.isReachedEnd()) {
+        if (Output.isThereNoSpace()) {
             return;
         }
 
@@ -263,22 +269,54 @@
     /** displays the given string starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printString(String s) {
+        var int i;
+
+        while (i < s.length()) {
+            do Output.printChar(s.charAt(i));
+            let i = i + 1;
+        }
         return;
     }
 
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int i) {
+        var String str;
+
+        let str = String.new(50);
+        do str.setInt(i);
+
+        do Output.printString(str);
+
+        do str.dispose();
         return;
     }
 
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
+        if (cursor[1] = gridHeight) {
+            return;
+        }
+
+        let cursor[0] = 0;
+        let cursor[1] = cursor[1] + 1;
+        
         return;
     }
 
     /** Moves the cursor one column back. */
     function void backSpace() {
+        if ((cursor[0] = 0) & (cursor[1] = 0)) {
+            return;
+        }
+
+        if (cursor[0] = 0) {
+            do Output.moveCursor(cursor[1] - 1, gridWidth);
+        } else {
+            do Output.moveCursor(cursor[1], cursor[0] - 1);
+        }
+
+
         return;
     }
 }

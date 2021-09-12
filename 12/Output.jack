@@ -260,6 +260,16 @@
             return;
         }
 
+        if (c = String.newLine()) {
+            do Output.println();
+            return;
+        }
+
+        if (c = String.backSpace()) {
+            do Output.backSpace();
+            return;
+        }
+
         do Output.printCharCurrent(c);
         do Output.advanceCursor();
 

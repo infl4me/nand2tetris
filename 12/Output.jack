@@ -14,13 +14,35 @@
  * character position on the screen is indexed (0,0). A cursor, implemented
  * as a small filled square, indicates where the next character will be displayed.
  */
-class Output {
+ class Output {
 
     // Character map for displaying characters
     static Array charMaps; 
 
+    // the locationm of the cursor
+    static Array cursor;
+
+    static int gridWidth;
+    static int gridHeight;
+
+    static int frameWidth;
+    static int frameHeight;
+
     /** Initializes the screen, and locates the cursor at the screen's top-left. */
     function void init() {
+        do Output.initMap();
+
+        let gridWidth = 63;
+        let gridHeight = 22;
+
+        let frameWidth = 8;
+        let frameHeight = 11;
+
+        let cursor = Array.new(2);
+        let cursor[0] = 0;
+        let cursor[1] = 0;
+        
+        return;
     }
 
     // Initializes the character map array
@@ -71,7 +93,7 @@ class Output {
         do Output.create(64,30,51,51,59,59,59,27,3,30,0,0);  // @
         do Output.create(63,30,51,51,24,12,12,0,12,12,0,0);  // ?
 
-        do Output.create(65,0,0,0,0,0,0,0,0,0,0,0);          // A ** TO BE FILLED **
+        do Output.create(65,12,30,51,51,63,51,51,51,51,0,0); // A
         do Output.create(66,31,51,51,51,31,51,51,51,31,0,0); // B
         do Output.create(67,28,54,35,3,3,3,35,54,28,0,0);    // C
         do Output.create(68,15,27,51,51,51,51,51,27,15,0,0); // D
@@ -176,28 +198,87 @@ class Output {
     /** Moves the cursor to the j-th column of the i-th row,
      *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
+        let cursor[0] = j;
+        let cursor[1] = i;
+
+        do Output.printCharCurrent(32);
+
+        return;
+    }
+
+    /** Moves the cursor to the next cell */
+     function void advanceCursor() {
+        if (Output.isReachedEnd()) {
+            return;
+        }
+
+        let cursor[0] = cursor[0] + 1;
+        let cursor[1] = cursor[1] + 1;
+
+        return;
+    }
+
+    /** Displays the given character at the cursor location */
+     function void printCharCurrent(char c) {
+        var int j, i, currentChar;
+        var boolean color;
+        let currentChar = charMaps[c];
+
+        while (j < frameHeight) {
+            while (i < frameWidth) {
+                if (Math.bit(currentChar[j], i)) {
+                    do Screen.setColor(true);
+                } else {
+                    do Screen.setColor(false);
+                }
+
+                do Screen.drawPixel((cursor[0] * frameWidth) + i, (cursor[1] * frameHeight) + j);
+                let i = i + 1;
+            }
+
+            let i = 0;
+            let j = j + 1;
+        }
+
+        return;
+    }
+
+     function boolean isReachedEnd() {
+        return (cursor[0] = gridWidth + 1) & (cursor[1] = gridHeight + 1);
     }
 
     /** Displays the given character at the cursor location,
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
+        if (Output.isReachedEnd()) {
+            return;
+        }
+
+        do Output.printCharCurrent(c);
+        do Output.advanceCursor();
+
+        return;
     }
 
     /** displays the given string starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printString(String s) {
+        return;
     }
 
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int i) {
+        return;
     }
 
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
+        return;
     }
 
     /** Moves the cursor one column back. */
     function void backSpace() {
+        return;
     }
 }

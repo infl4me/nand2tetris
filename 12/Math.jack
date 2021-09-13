@@ -70,7 +70,7 @@ class Math {
     function int internalDivide(int x, int y) {
         var int q;
 
-        if (y > x) {
+        if ((y > x) | (y < 0)) {
             return 0;
         }
     
